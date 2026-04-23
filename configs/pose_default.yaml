@@ -1,0 +1,56 @@
+# Pose Subnet Configuration
+
+# Model parameters
+model:
+  name: "PoseNet"
+  translation_std: 0.27  # Standard deviation for translation sampling
+  rotation_std: 0.12     # Standard deviation for rotation sampling (radians)
+  n_pose_bins: 10        # Number of bins per dimension
+  feature_channels: 32
+  use_geometric_consistency: true
+  checkpoint: null  # Path to pretrained checkpoint
+
+# Training parameters
+training:
+  batch_size: 4
+  num_workers: 4
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  lr_scheduler: "step"
+  lr_step_size: 10
+  lr_gamma: 0.7
+  gradient_clip: 1.0
+  amp: true
+
+# Data parameters
+data:
+  dataset: "demon"
+  data_root: "data/demon"
+  image_size: [384, 512]
+  num_source_views: 2
+  augmentations:
+    random_crop: true
+    random_scale: [0.8, 1.2]
+    random_brightness: 0.2
+    random_contrast: 0.2
+
+# Loss weights
+loss:
+  translation_weight: 1.0
+  rotation_weight: 1.0
+  geometric_weight: 0.5
+
+# Logging and saving
+logging:
+  log_dir: "logs/pose"
+  save_dir: "checkpoints/pose"
+  save_frequency: 5
+  tensorboard: true
+  verbose: true
+
+# Evaluation
+evaluation:
+  metrics: ["rotation_error", "translation_error", "translation_angular_error"]
+  eval_frequency: 1
+  save_predictions: true

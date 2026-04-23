@@ -1,0 +1,24 @@
+# Core dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.21.0
+scipy>=1.7.0
+pillow>=9.0.0
+opencv-python>=4.5.0
+
+# Data and utilities
+h5py>=3.6.0
+tensorboard>=2.10.0
+tqdm>=4.64.0
+pyyaml>=6.0
+matplotlib>=3.5.0
+scikit-image>=0.19.0
+
+# Optional: 3D visualization
+open3d>=0.16.0  # For 3D point cloud visualization
+
+# Development
+black>=22.0.0
+flake8>=5.0.0
+isort>=5.10.0
+pre-commit>=2.20.0

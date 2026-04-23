@@ -1,0 +1,57 @@
+# Depth Subnet Configuration
+
+# Model parameters
+model:
+  name: "PSNet"
+  min_depth: 0.5
+  max_depth: 10.0
+  n_depth_bins: 64
+  feature_channels: 32
+  use_geometric_consistency: true
+  checkpoint: null  # Path to pretrained checkpoint
+
+# Training parameters
+training:
+  batch_size: 4
+  num_workers: 4
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  lr_scheduler: "step"
+  lr_step_size: 10
+  lr_gamma: 0.7
+  gradient_clip: 1.0
+  amp: true  # Automatic Mixed Precision
+
+# Data parameters
+data:
+  dataset: "demon"  # demon, kitti, custom
+  data_root: "data/demon"
+  image_size: [384, 512]  # Height, Width
+  num_source_views: 2
+  augmentations:
+    random_crop: true
+    random_scale: [0.8, 1.2]
+    random_brightness: 0.2
+    random_contrast: 0.2
+
+# Loss weights
+loss:
+  depth_weight: 1.0
+  smoothness_weight: 0.1
+  geometric_weight: 0.5
+  multi_scale_weights: [0.5, 0.7, 1.0, 1.0]  # For multi-scale predictions
+
+# Logging and saving
+logging:
+  log_dir: "logs/depth"
+  save_dir: "checkpoints/depth"
+  save_frequency: 5  # Save checkpoint every N epochs
+  tensorboard: true
+  verbose: true
+
+# Evaluation
+evaluation:
+  metrics: ["abs_rel", "sq_rel", "rmse", "a1", "a2", "a3"]
+  eval_frequency: 1  # Evaluate every N epochs
+  save_predictions: true
